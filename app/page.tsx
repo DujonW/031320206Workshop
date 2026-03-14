@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
@@ -28,7 +28,11 @@ const PI_FACTS = [
 export default function Home() {
   const [result, setResult] = useState<PiSearchResult | null>(null);
   const [loading, setLoading] = useState(false);
-  const [factIndex] = useState(() => Math.floor(Math.random() * PI_FACTS.length));
+  const [factIndex, setFactIndex] = useState(0);
+
+  useEffect(() => {
+    setFactIndex(Math.floor(Math.random() * PI_FACTS.length));
+  }, []);
 
   return (
     <Box
