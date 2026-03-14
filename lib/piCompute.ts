@@ -1,0 +1,105 @@
+/**
+ * Gibbons Spigot Algorithm for Pi digits
+ * Based on: Jeremy Gibbons, "Unbounded Spigot Algorithms for the Digits of Pi", 2006
+ * Generates digits of π one by one using only integer arithmetic (BigInt).
+ */
+export function computePiDigits(count: number): string {
+  const digits: number[] = [];
+  let q = 1n;
+  let r = 0n;
+  let t = 1n;
+  let k = 1n;
+  let n = 3n;
+  let l = 3n;
+
+  while (digits.length < count) {
+    if (4n * q + r - t < n * t) {
+      digits.push(Number(n));
+      const newR = 10n * (r - n * t);
+      const newN = (10n * (3n * q + r)) / t - 10n * n;
+      q = 10n * q;
+      r = newR;
+      n = newN;
+    } else {
+      const newR = (2n * q + r) * l;
+      const newN = (q * (7n * k) + 2n + r * l) / (t * l);
+      q = q * k;
+      t = t * l;
+      l = l + 2n;
+      k = k + 1n;
+      n = newN;
+      r = newR;
+    }
+  }
+
+  // First digit is '3', rest are decimal digits: "3141592653..."
+  return digits.join("");
+}
+
+export interface SearchResult {
+  format: string;
+  pattern: string;
+  position: number | null;
+  found: boolean;
+}
+
+export interface PiSearchResponse {
+  results: SearchResult[];
+  searchedDigits: number;
+  bestMatch: SearchResult | null;
+  piContext: string | null;
+}
+
+export function searchPiDigits(
+  piString: string,
+  dob: string
+): PiSearchResponse {
+  const date = new Date(dob + "T00:00:00");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const year = String(date.getFullYear());
+  const yearShort = year.slice(2);
+
+  const formats = [
+    { pattern: `${month}${day}`, format: "MMDD" },
+    { pattern: `${day}${month}`, format: "DDMM" },
+    { pattern: `${month}${day}${year}`, format: "MMDDYYYY" },
+    { pattern: `${day}${month}${year}`, format: "DDMMYYYY" },
+    { pattern: `${year}${month}${day}`, format: "YYYYMMDD" },
+    { pattern: `${month}${day}${yearShort}`, format: "MMDDYY" },
+  ];
+
+  const results: SearchResult[] = formats.map(({ pattern, format }) => {
+    const index = piString.indexOf(pattern);
+    return {
+      format,
+      pattern,
+      position: index !== -1 ? index : null,
+      found: index !== -1,
+    };
+  });
+
+  // Best match = earliest found position
+  const found = results.filter((r) => r.found);
+  found.sort((a, b) => (a.position ?? Infinity) - (b.position ?? Infinity));
+  const bestMatch = found.length > 0 ? found[0] : null;
+
+  // Generate context string around best match
+  let piContext: string | null = null;
+  if (bestMatch && bestMatch.position !== null) {
+    const pos = bestMatch.position;
+    const contextStart = Math.max(0, pos - 20);
+    const contextEnd = Math.min(piString.length, pos + bestMatch.pattern.length + 20);
+    const before = piString.slice(contextStart, pos);
+    const match = piString.slice(pos, pos + bestMatch.pattern.length);
+    const after = piString.slice(pos + bestMatch.pattern.length, contextEnd);
+    piContext = `...${before}[${match}]${after}...`;
+  }
+
+  return {
+    results,
+    searchedDigits: piString.length,
+    bestMatch,
+    piContext,
+  };
+}
