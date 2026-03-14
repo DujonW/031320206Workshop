@@ -14,8 +14,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import CelebrationIcon from "@mui/icons-material/Celebration";
-import PiPictogram from "./PiPictogram";
-import PiTape from "./PiTape";
+import PiScanAnimation from "./PiScanAnimation";
 import type { PiSearchResult } from "./DOBForm";
 
 interface PiResultProps {
@@ -33,7 +32,7 @@ const FORMAT_LABELS: Record<string, string> = {
 
 export default function PiResult({ result }: PiResultProps) {
   const [copied, setCopied] = useState(false);
-  const { bestMatch, results, piContext, searchedDigits } = result;
+  const { bestMatch, results, searchedDigits, contextDigits, contextStart } = result;
 
   const displayDate = new Date(result.dob + "T00:00:00").toLocaleDateString(
     "en-US",
@@ -164,44 +163,33 @@ export default function PiResult({ result }: PiResultProps) {
         </Card>
       )}
 
-      {/* Pictogram + Tape */}
-      {bestMatch && piContext && (
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={5}>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <PiPictogram
-                position={bestMatch.position}
-                totalDigits={searchedDigits}
-                pattern={bestMatch.pattern}
-                format={bestMatch.format}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={7}>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", gap: 3, p: 1 }}
-            >
-              {/* Position stats */}
-              <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-                <StatPill
-                  label="Position"
-                  value={`#${bestMatch.position.toLocaleString()}`}
-                />
-                <StatPill
-                  label="Format"
-                  value={`${bestMatch.format} (${bestMatch.pattern})`}
-                />
-                <StatPill
-                  label="% into π"
-                  value={`${((bestMatch.position / searchedDigits) * 100).toFixed(3)}%`}
-                />
-              </Box>
+      {/* SDAZ Pi Scan Animation */}
+      {bestMatch && contextDigits && (
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+          <PiScanAnimation
+            targetPosition={bestMatch.position}
+            pattern={bestMatch.pattern}
+            format={bestMatch.format}
+            contextDigits={contextDigits}
+            contextStart={contextStart}
+          />
 
-              {/* Digit tape */}
-              <PiTape context={piContext} pattern={bestMatch.pattern} />
-            </Box>
-          </Grid>
-        </Grid>
+          {/* Stats pills below animation */}
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+            <StatPill
+              label="Position"
+              value={`#${bestMatch.position.toLocaleString()}`}
+            />
+            <StatPill
+              label="Format"
+              value={`${bestMatch.format} (${bestMatch.pattern})`}
+            />
+            <StatPill
+              label="% into π"
+              value={`${((bestMatch.position / searchedDigits) * 100).toFixed(3)}%`}
+            />
+          </Box>
+        </Box>
       )}
 
       <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />

@@ -30,6 +30,8 @@ export interface PiSearchResult {
     found: boolean;
   } | null;
   piContext: string | null;
+  contextDigits: string | null;
+  contextStart: number;
   dob: string;
 }
 

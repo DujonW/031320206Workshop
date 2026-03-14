@@ -48,6 +48,8 @@ export interface PiSearchResponse {
   searchedDigits: number;
   bestMatch: SearchResult | null;
   piContext: string | null;
+  contextDigits: string | null;  // raw Pi slice around match (no brackets)
+  contextStart: number;          // global Pi position where contextDigits begins
 }
 
 export function searchPiDigits(
@@ -84,12 +86,22 @@ export function searchPiDigits(
   found.sort((a, b) => (a.position ?? Infinity) - (b.position ?? Infinity));
   const bestMatch = found.length > 0 ? found[0] : null;
 
-  // Generate context string around best match
+  // Generate context around best match
   let piContext: string | null = null;
+  let contextDigits: string | null = null;
+  let contextStart = 0;
+
   if (bestMatch && bestMatch.position !== null) {
     const pos = bestMatch.position;
-    const contextStart = Math.max(0, pos - 20);
-    const contextEnd = Math.min(piString.length, pos + bestMatch.pattern.length + 20);
+    const RADIUS = 120; // digits on each side for the animation approach window
+
+    contextStart = Math.max(0, pos - RADIUS);
+    const contextEnd = Math.min(piString.length, pos + bestMatch.pattern.length + RADIUS);
+
+    // Raw slice for SDAZ animation
+    contextDigits = piString.slice(contextStart, contextEnd);
+
+    // Bracketed display string for static tape
     const before = piString.slice(contextStart, pos);
     const match = piString.slice(pos, pos + bestMatch.pattern.length);
     const after = piString.slice(pos + bestMatch.pattern.length, contextEnd);
@@ -101,5 +113,7 @@ export function searchPiDigits(
     searchedDigits: piString.length,
     bestMatch,
     piContext,
+    contextDigits,
+    contextStart,
   };
 }
