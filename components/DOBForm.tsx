@@ -131,7 +131,7 @@ export default function DOBForm({ onResult, loading, setLoading }: DOBFormProps)
       </Button>
 
       <Typography variant="caption" sx={{ color: "text.secondary", textAlign: "center" }}>
-        Searches the first 50,000 digits of π
+        Searches the first 1,000,000 digits of π
       </Typography>
     </Box>
   );

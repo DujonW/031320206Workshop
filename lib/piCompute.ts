@@ -1,39 +1,7 @@
-/**
- * Gibbons Spigot Algorithm for Pi digits
- * Based on: Jeremy Gibbons, "Unbounded Spigot Algorithms for the Digits of Pi", 2006
- * Generates digits of π one by one using only integer arithmetic (BigInt).
- */
+import { PI_1M } from "./pi-data";
+
 export function computePiDigits(count: number): string {
-  const digits: number[] = [];
-  let q = 1n;
-  let r = 0n;
-  let t = 1n;
-  let k = 1n;
-  let n = 3n;
-  let l = 3n;
-
-  while (digits.length < count) {
-    if (4n * q + r - t < n * t) {
-      digits.push(Number(n));
-      const newR = 10n * (r - n * t);
-      const newN = (10n * (3n * q + r)) / t - 10n * n;
-      q = 10n * q;
-      r = newR;
-      n = newN;
-    } else {
-      const newR = (2n * q + r) * l;
-      const newN = (q * (7n * k) + 2n + r * l) / (t * l);
-      q = q * k;
-      t = t * l;
-      l = l + 2n;
-      k = k + 1n;
-      n = newN;
-      r = newR;
-    }
-  }
-
-  // First digit is '3', rest are decimal digits: "3141592653..."
-  return digits.join("");
+  return PI_1M.slice(0, count);
 }
 
 export interface SearchResult {
