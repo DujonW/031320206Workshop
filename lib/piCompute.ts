@@ -49,9 +49,12 @@ export function searchPiDigits(
     };
   });
 
-  // Best match = earliest found position
+  // Best match = prefer longer patterns (8-digit > 6-digit > 4-digit), then earliest position
   const found = results.filter((r) => r.found);
-  found.sort((a, b) => (a.position ?? Infinity) - (b.position ?? Infinity));
+  found.sort((a, b) => {
+    if (b.pattern.length !== a.pattern.length) return b.pattern.length - a.pattern.length;
+    return (a.position ?? Infinity) - (b.position ?? Infinity);
+  });
   const bestMatch = found.length > 0 ? found[0] : null;
 
   // Generate context around best match

@@ -34,7 +34,7 @@ export default function PiResult({ result }: PiResultProps) {
   const [copied, setCopied] = useState(false);
   const { bestMatch, results, searchedDigits, contextDigits, contextStart } = result;
 
-  const displayDate = result.dob.replace(/-/g, "/");
+  const displayDate = result.dob;
 
   async function handleCopy() {
     const text = bestMatch
