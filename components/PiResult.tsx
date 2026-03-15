@@ -34,10 +34,7 @@ export default function PiResult({ result }: PiResultProps) {
   const [copied, setCopied] = useState(false);
   const { bestMatch, results, searchedDigits, contextDigits, contextStart } = result;
 
-  const displayDate = new Date(result.dob + "T00:00:00").toLocaleDateString(
-    "en-US",
-    { year: "numeric", month: "long", day: "numeric" }
-  );
+  const displayDate = result.dob.replace(/-/g, "/");
 
   async function handleCopy() {
     const text = bestMatch
@@ -262,7 +259,7 @@ export default function PiResult({ result }: PiResultProps) {
                   >
                     {r.found
                       ? `Position ${r.position?.toLocaleString()}`
-                      : "Not in first 50k digits"}
+                      : "Not in first 1M digits"}
                   </Typography>
                 </Box>
               </Box>
