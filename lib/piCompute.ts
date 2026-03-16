@@ -1,7 +1,7 @@
-import { PI_1M } from "./pi-data";
+import { PI_2M } from "./pi-data";
 
 export function computePiDigits(count: number): string {
-  return PI_1M.slice(0, count);
+  return PI_2M.slice(0, count);
 }
 
 export interface SearchResult {

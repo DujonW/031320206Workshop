@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { computePiDigits, searchPiDigits } from "@/lib/piCompute";
 
-const piString = computePiDigits(1_000_000);
+const piString = computePiDigits(2_000_000);
 
 export async function GET(request: NextRequest) {
   const dob = request.nextUrl.searchParams.get("dob");
