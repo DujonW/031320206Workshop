@@ -121,9 +121,9 @@ export default function DOBForm({ onResult, loading, setLoading }: DOBFormProps)
           fontSize: "1.05rem",
           background: loading
             ? undefined
-            : "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)",
+            : "linear-gradient(135deg, #9fa4c4 0%, #6b7099 100%)",
           "&:hover": {
-            background: "linear-gradient(135deg, #1976D2 0%, #1565C0 100%)",
+            background: "linear-gradient(135deg, #c5c9df 0%, #9fa4c4 100%)",
           },
         }}
       >

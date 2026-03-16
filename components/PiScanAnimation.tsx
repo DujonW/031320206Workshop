@@ -112,15 +112,15 @@ export default function PiScanAnimation({
       ctx.clearRect(0, 0, W, H);
 
       // ─── background ───────────────────────────────────────────────────────
-      ctx.fillStyle = "#0A0E2C";
+      ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, W, H);
 
       // Subtle vignette (darken edges so focus stays center)
       const vig = ctx.createLinearGradient(0, 0, W, 0);
-      vig.addColorStop(0, "rgba(10,14,44,0.85)");
-      vig.addColorStop(0.15, "rgba(10,14,44,0)");
-      vig.addColorStop(0.85, "rgba(10,14,44,0)");
-      vig.addColorStop(1, "rgba(10,14,44,0.85)");
+      vig.addColorStop(0, "rgba(0,0,0,0.85)");
+      vig.addColorStop(0.15, "rgba(0,0,0,0)");
+      vig.addColorStop(0.85, "rgba(0,0,0,0)");
+      vig.addColorStop(1, "rgba(0,0,0,0.85)");
       ctx.fillStyle = vig;
       ctx.fillRect(0, 0, W, H);
 
@@ -129,10 +129,10 @@ export default function PiScanAnimation({
       const cy = H / 2;
       const halfVisible = Math.ceil((W / 2) / charW) + 2;
 
-      // Colour interpolation: blue (fast) → gold (slow/found)
-      const r = Math.round(94  + (255 - 94)  * zoom);
-      const g = Math.round(146 + (213 - 146) * zoom);
-      const b = Math.round(243 + (79  - 243) * zoom);
+      // Colour interpolation: #9fa4c4 (fast) → #e1bdc5 (slow/found)
+      const r = Math.round(159 + (225 - 159) * zoom);
+      const g = Math.round(164 + (189 - 164) * zoom);
+      const b = Math.round(196 + (197 - 196) * zoom);
       const baseColor = `rgb(${r},${g},${b})`;
 
       ctx.textBaseline = "middle";
@@ -158,13 +158,13 @@ export default function PiScanAnimation({
         if (isMatchDigit) {
           // Orange background box
           const fadeIn = Math.min(1, (t - 0.92) / 0.08);
-          ctx.fillStyle = `rgba(255, 111, 0, ${fadeIn * 0.25})`;
+          ctx.fillStyle = `rgba(225, 189, 197, ${fadeIn * 0.25})`;
           ctx.fillRect(x - charW * 0.55, cy - fontSize * 0.6, charW * 1.1, fontSize * 1.2);
 
           // Glow
-          ctx.shadowColor = "#FF6F00";
+          ctx.shadowColor = "#e1bdc5";
           ctx.shadowBlur = 18 * fadeIn;
-          ctx.fillStyle = `rgba(255, 213, 79, ${fadeIn})`; // gold
+          ctx.fillStyle = `rgba(225, 189, 197, ${fadeIn})`;
         } else {
           const edgeFade = Math.max(0.06, 1 - distFromCenter * 0.85);
           // Speed tint: fast = dim/blue, slow = bright/warm
@@ -172,7 +172,7 @@ export default function PiScanAnimation({
           ctx.fillStyle =
             speedFactor > 0.05
               ? `rgba(${r},${g},${b},${edgeFade * brightness})`
-              : `rgba(176,190,197,${edgeFade * 0.95})`;
+              : `rgba(159,164,196,${edgeFade * 0.95})`;
           ctx.shadowBlur = 0;
         }
 
@@ -188,7 +188,7 @@ export default function PiScanAnimation({
 
       // ─── center scan cursor ───────────────────────────────────────────────
       const cursorColor =
-        speedFactor > 0.4 ? "rgba(94,146,243,0.55)" : `rgba(255,213,79,${0.4 + zoom * 0.5})`;
+        speedFactor > 0.4 ? "rgba(159,164,196,0.55)" : `rgba(225,189,197,${0.4 + zoom * 0.5})`;
       ctx.strokeStyle = cursorColor;
       ctx.lineWidth = 1.5;
       ctx.setLineDash([5, 5]);
@@ -228,10 +228,10 @@ export default function PiScanAnimation({
 
   const labelColor =
     scanLabel === "FOUND"
-      ? "#FFD54F"
+      ? "#e1bdc5"
       : scanLabel === "APPROACHING"
-      ? "#FFA040"
-      : "#5E92F3";
+      ? "#c5b3ce"
+      : "#9fa4c4";
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -242,11 +242,11 @@ export default function PiScanAnimation({
           borderRadius: 2,
           overflow: "hidden",
           border: done
-            ? "1px solid rgba(255,111,0,0.35)"
-            : "1px solid rgba(21,101,192,0.3)",
+            ? "1px solid rgba(225,189,197,0.35)"
+            : "1px solid rgba(159,164,196,0.3)",
           boxShadow: done
-            ? "0 0 32px rgba(255,111,0,0.25)"
-            : "0 0 20px rgba(21,101,192,0.15)",
+            ? "0 0 32px rgba(225,189,197,0.25)"
+            : "0 0 20px rgba(159,164,196,0.15)",
           transition: "box-shadow 0.6s ease, border-color 0.6s ease",
         }}
       >
@@ -323,7 +323,7 @@ export default function PiScanAnimation({
           <Typography
             variant="caption"
             sx={{
-              color: "#FFD54F",
+              color: "#e1bdc5",
               fontFamily: "Roboto Mono, monospace",
               fontSize: "0.72rem",
               fontWeight: 700,

@@ -76,8 +76,8 @@ export default function PiResult({ result }: PiResultProps) {
         <Card
           sx={{
             background:
-              "linear-gradient(135deg, rgba(21,101,192,0.15) 0%, rgba(255,111,0,0.1) 100%)",
-            border: "1px solid rgba(255,111,0,0.3)",
+              "linear-gradient(135deg, rgba(159,164,196,0.15) 0%, rgba(225,189,197,0.1) 100%)",
+            border: "1px solid rgba(225,189,197,0.3)",
           }}
         >
           <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
@@ -101,7 +101,7 @@ export default function PiResult({ result }: PiResultProps) {
                   <Box
                     component="span"
                     sx={{
-                      color: "#FFD54F",
+                      color: "#e1bdc5",
                       fontFamily: "Roboto Mono, monospace",
                     }}
                   >
@@ -210,9 +210,9 @@ export default function PiResult({ result }: PiResultProps) {
                   p: 1.5,
                   borderRadius: 2,
                   bgcolor: r.found
-                    ? "rgba(21,101,192,0.12)"
+                    ? "rgba(159,164,196,0.12)"
                     : "rgba(255,255,255,0.03)",
-                  border: `1px solid ${r.found ? "rgba(21,101,192,0.3)" : "rgba(255,255,255,0.06)"}`,
+                  border: `1px solid ${r.found ? "rgba(159,164,196,0.3)" : "rgba(255,255,255,0.06)"}`,
                 }}
               >
                 {r.found ? (
@@ -296,7 +296,7 @@ function StatPill({ label, value }: { label: string; value: string }) {
           fontFamily: "Roboto Mono, monospace",
           fontSize: "0.9rem",
           fontWeight: 600,
-          color: "#FFD54F",
+          color: "#e1bdc5",
         }}
       >
         {value}

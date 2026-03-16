@@ -63,7 +63,7 @@ export default function Home() {
           height: "600px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(21,101,192,0.12) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(159,164,196,0.12) 0%, transparent 70%)",
           pointerEvents: "none",
           zIndex: 0,
         }}
@@ -82,8 +82,8 @@ export default function Home() {
             label="🥧 Happy Pi Day — March 14"
             sx={{
               mb: 3,
-              bgcolor: "rgba(21,101,192,0.15)",
-              border: "1px solid rgba(21,101,192,0.4)",
+              bgcolor: "rgba(159,164,196,0.15)",
+              border: "1px solid rgba(159,164,196,0.4)",
               color: "primary.light",
               fontWeight: 600,
               fontSize: "0.85rem",
@@ -99,7 +99,7 @@ export default function Home() {
               lineHeight: 1.1,
               mb: 2,
               background:
-                "linear-gradient(135deg, #FFFFFF 0%, #5E92F3 50%, #FF6F00 100%)",
+                "linear-gradient(135deg, #FFFFFF 0%, #9fa4c4 50%, #e1bdc5 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
