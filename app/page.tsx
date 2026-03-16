@@ -206,7 +206,7 @@ export default function Home() {
             variant="caption"
             sx={{ color: "rgba(255,255,255,0.2)", fontFamily: "Roboto Mono, monospace" }}
           >
-            Searches first 2,000,000 decimal digits of π · Built for Pi Day 2026
+            Searches millions of decimal digits of π via Pi API · Built for Pi Day 2026
           </Typography>
         </Box>
       </Container>

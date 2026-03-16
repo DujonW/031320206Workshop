@@ -259,7 +259,7 @@ export default function PiResult({ result }: PiResultProps) {
                   >
                     {r.found
                       ? `Position ${r.position?.toLocaleString()}`
-                      : "Not in first 2M digits"}
+                      : `Not in first ${(searchedDigits / 1_000_000).toFixed(0)}M digits`}
                   </Typography>
                 </Box>
               </Box>
